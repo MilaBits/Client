@@ -14,7 +14,7 @@ public class FieldOfViewEditor : Editor
 
     private void OnSceneGUI()
     {
-        if (EditorApplication.isPlaying) return;
+//        if (EditorApplication.isPlaying) return;
         
         GUIStyle labelStyle = new GUIStyle {fontSize = 14};
         var viewPoints = fov.CalculateViewPoints();

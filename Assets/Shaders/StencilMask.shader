@@ -7,7 +7,7 @@
 	}
 	SubShader {
 		Tags { "RenderType"="Opaque" "Queue"="Geometry-100"}
-		ColorMask 0
+		ColorMask 255
 		Zwrite off
 		LOD 200
 

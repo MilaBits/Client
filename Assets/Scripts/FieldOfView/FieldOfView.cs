@@ -70,6 +70,70 @@ public class FieldOfView : MonoBehaviour
         _viewMesh.RecalculateNormals();
     }
 
+    private float fogDistance = 12;
+    private float fogHeight = 2;
+
+    public void DrawFieldOfViewBig()
+    {
+        var viewPoints = CalculateViewPoints();
+
+        int vertexCount = viewPoints.Count + 1;
+        Vector3[] vertices = new Vector3[vertexCount];
+        int[] triangles = new int[vertexCount * 12];
+
+//        vertices[0] = Vector3.zero;
+        for (int i = 2; i < vertexCount - 5; i++)
+        {
+            //a
+            vertices[i] = transform.InverseTransformPoint(viewPoints[i]);
+            Debug.DrawLine(transform.position, viewPoints[i], Color.red, 10f);
+            //b
+            vertices[i + 1] = transform.InverseTransformPoint(
+                (viewPoints[i] + viewPoints[i].normalized * fogDistance));
+            //c
+            vertices[i + 2] = transform.InverseTransformPoint(
+                (viewPoints[i - 1] + viewPoints[i + 1].normalized * fogDistance));
+            //d
+            vertices[i + 3] = transform.InverseTransformPoint(
+                viewPoints[i - 1] - DetectionOffset);
+            //e
+            vertices[i + 4] = transform.InverseTransformPoint(
+                (viewPoints[i] - Vector3.down * fogHeight));
+            //f
+            vertices[i + 5] = transform.InverseTransformPoint(
+                (viewPoints[i - 1] + Vector3.down * fogHeight));
+
+
+            if (i < vertexCount - 3)
+            {
+                //abc
+                triangles[i * 12] = i;
+                triangles[i * 12 + 1] = i + 1;
+                triangles[i * 12 + 2] = i + 2;
+
+                //acd
+                triangles[i * 12 + 3] = i;
+                triangles[i * 12 + 4] = i + 2;
+                triangles[i * 12 + 5] = i + 3;
+
+                //ade
+                triangles[i * 12 + 6] = i;
+                triangles[i * 12 + 7] = i + 3;
+                triangles[i * 12 + 8] = i + 4;
+
+                //aef
+                triangles[i * 12 + 9] = i;
+                triangles[i * 12 + 10] = i + 5;
+                triangles[i * 12 + 11] = i + 5;
+            }
+        }
+
+        _viewMesh.Clear();
+        _viewMesh.vertices = vertices;
+        _viewMesh.triangles = triangles;
+        _viewMesh.RecalculateNormals();
+    }
+
     // TODO: Implement RaycastCommand https://docs.unity3d.com/ScriptReference/RaycastCommand.html
     public List<Vector3> CalculateViewPoints()
     {

@@ -59,7 +59,7 @@ Shader "Custom/StencilStandard"
         LOD 300
 
         Stencil {
-            Ref 1
+            Ref 255
             Comp equal
         }
 
