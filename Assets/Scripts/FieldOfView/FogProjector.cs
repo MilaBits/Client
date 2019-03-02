@@ -3,11 +3,17 @@ using UnityEngine;
 
 public class FogProjector : MonoBehaviour
 {
-    public Material projectorMaterial;
-    public float blendSpeed;
-    public int textureScale;
+    [SerializeField]
+    private Material projectorMaterial;
 
-    public RenderTexture fogTexture;
+    [SerializeField]
+    private float blendSpeed;
+
+    [SerializeField]
+    private int textureScale;
+
+    [SerializeField]
+    private RenderTexture fogTexture;
 
     private RenderTexture prevTexture;
     private RenderTexture currTexture;
@@ -15,7 +21,9 @@ public class FogProjector : MonoBehaviour
 
     private float blendAmount;
 
-    private void Awake ()
+    private IEnumerator blendFogCoroutine;
+
+    private void Awake()
     {
         projector = GetComponent<Projector>();
         projector.enabled = true;
@@ -33,13 +41,13 @@ public class FogProjector : MonoBehaviour
         StartNewBlend();
     }
 
-    RenderTexture GenerateTexture()
+    private RenderTexture GenerateTexture()
     {
         RenderTexture rt = new RenderTexture(
             fogTexture.width * textureScale,
             fogTexture.height * textureScale,
             0,
-            fogTexture.format) { filterMode = FilterMode.Bilinear };
+            fogTexture.format) {filterMode = FilterMode.Bilinear};
         rt.antiAliasing = fogTexture.antiAliasing;
 
         return rt;
@@ -47,26 +55,24 @@ public class FogProjector : MonoBehaviour
 
     public void StartNewBlend()
     {
-        StopCoroutine(BlendFog());
+        StartCoroutine(BlendFog());
+    }
+
+    private IEnumerator BlendFog()
+    {
         blendAmount = 0;
         // Swap the textures
         Graphics.Blit(currTexture, prevTexture);
         Graphics.Blit(fogTexture, currTexture);
 
-        StartCoroutine(BlendFog());
-    }
-
-    IEnumerator BlendFog()
-    {
-        while (blendAmount < 1)
+        for (var blendAmound = 0f; blendAmount < 1; blendAmount += Time.deltaTime * blendSpeed)
         {
-            // increase the interpolation amount
-            blendAmount += Time.deltaTime * blendSpeed;
             // Set the blend property so the shader knows how much to lerp
             // by when checking the alpha value
             projector.material.SetFloat("_Blend", blendAmount);
             yield return null;
         }
+
         // once finished blending, swap the textures and start a new blend
         StartNewBlend();
     }

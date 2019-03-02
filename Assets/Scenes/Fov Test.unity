@@ -46578,6 +46578,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1887073440}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!33 &1890846885 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: 4346664726023322832, guid: c9b1cfbba31dba34e90d8eec5223aea9,
+    type: 3}
+  m_PrefabInstance: {fileID: 4346664724388225987}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1898302334
 GameObject:
   m_ObjectHideFlags: 0
@@ -52517,6 +52523,46 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346664726023322833, guid: c9b1cfbba31dba34e90d8eec5223aea9,
+        type: 3}
+      propertyPath: viewMeshFilter
+      value: 
+      objectReference: {fileID: 1890846885}
+    - target: {fileID: 4346664726023322833, guid: c9b1cfbba31dba34e90d8eec5223aea9,
+        type: 3}
+      propertyPath: viewConeWidth
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346664726023322833, guid: c9b1cfbba31dba34e90d8eec5223aea9,
+        type: 3}
+      propertyPath: meshResolution
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346664726023322833, guid: c9b1cfbba31dba34e90d8eec5223aea9,
+        type: 3}
+      propertyPath: edgeResolveIterations
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346664726023322833, guid: c9b1cfbba31dba34e90d8eec5223aea9,
+        type: 3}
+      propertyPath: edgeDistanceThreshold
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346664726023322833, guid: c9b1cfbba31dba34e90d8eec5223aea9,
+        type: 3}
+      propertyPath: viewRadius
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346664726023322833, guid: c9b1cfbba31dba34e90d8eec5223aea9,
+        type: 3}
+      propertyPath: obstacleMask.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346664726023322833, guid: c9b1cfbba31dba34e90d8eec5223aea9,
+        type: 3}
+      propertyPath: detectionOffset.y
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9b1cfbba31dba34e90d8eec5223aea9, type: 3}
