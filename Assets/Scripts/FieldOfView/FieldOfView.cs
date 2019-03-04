@@ -1,37 +1,51 @@
 ﻿using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Jobs;
+using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 
+[RequireComponent(typeof(MeshRenderer))]
+[RequireComponent(typeof(MeshFilter))]
 public class FieldOfView : MonoBehaviour
 {
+    [SerializeField] [Tooltip("The mesh that will show this field of view")]
+    private MeshFilter viewMeshFilter;
+    
     [SerializeField]
-    private float viewRadius;
+    private float viewRange = 5;
 
     [Range(0, 360)]
     [SerializeField]
-    private float viewConeWidth;
+    [Tooltip("The field of view width")]
+    private float viewConeWidth = 360;
 
     [SerializeField]
+    [Tooltip("Which layers this can't see through")]
     private LayerMask obstacleMask;
 
     [SerializeField]
-    private float meshResolution;
+    [Tooltip("Raycasts per degree")]
+    private float meshResolution = .1f;
 
     [SerializeField]
+    [Tooltip("How \"deep\" the field of view penetrates the wall")]
+    private float maskCutawayDistance = 0.1f;
+
+
+    [Header("Edge Detection")]
+    [SerializeField]
+    [Range(0, 10)]
+    [Tooltip("How many checks are done to make edges appear close to corners")]
     private int edgeResolveIterations;
 
     [SerializeField]
+    [Range(0, 10)]
+    [Tooltip("How far a corner has to be to be checked behind another corner")]
     private float edgeDistanceThreshold;
 
     [SerializeField]
+    [Tooltip("The center of the field of view's actual wall detection")]
     private Vector3 detectionOffset;
-
-    [SerializeField]
-    private MeshFilter viewMeshFilter;
-
-    [SerializeField]
-    private float maskCutawayDistance = 0.1f;
 
     private Mesh viewMesh;
 
@@ -40,6 +54,8 @@ public class FieldOfView : MonoBehaviour
 
     private void Start()
     {
+        if (!viewMeshFilter) Debug.LogError($"View Mesh Filter is not set on: {gameObject.name}");
+        
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
@@ -105,7 +121,8 @@ public class FieldOfView : MonoBehaviour
                 bool edgeDistanceThresholdExceeded =
                     Mathf.Abs(oldViewCast.Distance - newViewCast.Distance) > edgeDistanceThreshold;
                 if (oldViewCast.Hit != newViewCast.Hit ||
-                    (oldViewCast.Hit && newViewCast.Hit && edgeDistanceThresholdExceeded))
+                    (oldViewCast.Hit && newViewCast.Hit && oldViewCast.Normal != newViewCast.Normal &&
+                     edgeDistanceThresholdExceeded))
                 {
                     EdgeInfo edge = FindEdge(oldViewCast, newViewCast);
                     if (edge.PointA != Vector3.zero) viewPoints.Add(edge.PointA);
@@ -153,15 +170,16 @@ public class FieldOfView : MonoBehaviour
     {
         Vector3 dir = DirectionFromAngle(globalAngle, true);
 
-        if (Physics.Raycast((transform.position + detectionOffset), dir, out var hit, viewRadius, obstacleMask))
+        if (Physics.Raycast((transform.position + detectionOffset), dir, out var hit, viewRange, obstacleMask))
         {
             // Applying maskCutawayDistance to make sure the walls remain visible.
-            return new ViewCastInfo(true, hit.point + (-hit.normal * maskCutawayDistance), hit.distance, globalAngle);
+            return new ViewCastInfo(true, hit.point + (-hit.normal * maskCutawayDistance), hit.distance, globalAngle,
+                hit.normal);
         }
         else
         {
-            return new ViewCastInfo(false, (transform.position + detectionOffset) + dir * viewRadius, viewRadius,
-                globalAngle);
+            return new ViewCastInfo(false, (transform.position + detectionOffset) + dir * viewRange, viewRange,
+                globalAngle, hit.normal);
         }
     }
 
@@ -183,13 +201,15 @@ public class FieldOfView : MonoBehaviour
         public Vector3 Point;
         public float Distance;
         public float Angle;
+        public Vector3 Normal;
 
-        public ViewCastInfo(bool hit, Vector3 point, float distance, float angle)
+        public ViewCastInfo(bool hit, Vector3 point, float distance, float angle, Vector3 normal)
         {
             Hit = hit;
             Point = point;
             Distance = distance;
             Angle = angle;
+            Normal = normal;
         }
     }
 }

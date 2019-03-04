@@ -8,7 +8,7 @@ public class FieldOfViewEditor : Editor
 
     private SerializedProperty detectionOffsetProp;
     private SerializedProperty viewConeWidthProp;
-    private SerializedProperty viewRadiusProp;
+    private SerializedProperty viewRangeProp;
 
 
     private void OnEnable()
@@ -17,7 +17,7 @@ public class FieldOfViewEditor : Editor
 
         detectionOffsetProp = serializedObject.FindProperty("detectionOffset");
         viewConeWidthProp = serializedObject.FindProperty("viewConeWidth");
-        viewRadiusProp = serializedObject.FindProperty("viewRadius");
+        viewRangeProp = serializedObject.FindProperty("viewRange");
     }
 
     private void OnSceneGUI()
@@ -33,9 +33,9 @@ public class FieldOfViewEditor : Editor
         Vector3 viewAngleA = fov.DirectionFromAngle(-viewConeWidthProp.floatValue / 2, false);
         Vector3 viewAngleB = fov.DirectionFromAngle(viewConeWidthProp.floatValue / 2, false);
         Handles.DrawLine(fov.transform.position,
-            fov.transform.position + viewAngleA * viewRadiusProp.floatValue);
+            fov.transform.position + viewAngleA * viewRangeProp.floatValue);
         Handles.DrawLine(fov.transform.position,
-            fov.transform.position + viewAngleB * viewRadiusProp.floatValue);
+            fov.transform.position + viewAngleB * viewRangeProp.floatValue);
 
 
         // Draw Visual FOV outline;
@@ -51,12 +51,12 @@ public class FieldOfViewEditor : Editor
         labelStyle.normal.textColor = Color.green;
         Handles.Label(viewPoints[0], "Detection Cone", labelStyle);
         Handles.DrawWireArc(fov.transform.position + detectionOffsetProp.vector3Value, Vector3.up, Vector3.forward, 360,
-            viewRadiusProp.floatValue);
+            viewRangeProp.floatValue);
 
         Handles.DrawLine(fov.transform.position + detectionOffsetProp.vector3Value,
-            fov.transform.position + detectionOffsetProp.vector3Value + viewAngleA * viewRadiusProp.floatValue);
+            fov.transform.position + detectionOffsetProp.vector3Value + viewAngleA * viewRangeProp.floatValue);
         Handles.DrawLine(fov.transform.position + detectionOffsetProp.vector3Value,
-            fov.transform.position + detectionOffsetProp.vector3Value + viewAngleB * viewRadiusProp.floatValue);
+            fov.transform.position + detectionOffsetProp.vector3Value + viewAngleB * viewRangeProp.floatValue);
 
         // Draw Visual FOV outline;
         Handles.color = Color.green;
