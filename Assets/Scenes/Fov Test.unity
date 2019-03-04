@@ -13268,10 +13268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c398081074db824e99141f76fce6710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 916126767}
-  positionAngle: {x: 0, y: 90}
-  distance: 20
-  viewAngle: 45
+  camera: {fileID: 0}
 --- !u!1001 &574431659
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -52529,36 +52526,6 @@ PrefabInstance:
       propertyPath: viewMeshFilter
       value: 
       objectReference: {fileID: 1890846885}
-    - target: {fileID: 4346664726023322833, guid: c9b1cfbba31dba34e90d8eec5223aea9,
-        type: 3}
-      propertyPath: viewConeWidth
-      value: 360
-      objectReference: {fileID: 0}
-    - target: {fileID: 4346664726023322833, guid: c9b1cfbba31dba34e90d8eec5223aea9,
-        type: 3}
-      propertyPath: meshResolution
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4346664726023322833, guid: c9b1cfbba31dba34e90d8eec5223aea9,
-        type: 3}
-      propertyPath: edgeResolveIterations
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4346664726023322833, guid: c9b1cfbba31dba34e90d8eec5223aea9,
-        type: 3}
-      propertyPath: edgeDistanceThreshold
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4346664726023322833, guid: c9b1cfbba31dba34e90d8eec5223aea9,
-        type: 3}
-      propertyPath: viewRadius
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4346664726023322833, guid: c9b1cfbba31dba34e90d8eec5223aea9,
-        type: 3}
-      propertyPath: obstacleMask.m_Bits
-      value: 256
-      objectReference: {fileID: 0}
     - target: {fileID: 4346664726023322833, guid: c9b1cfbba31dba34e90d8eec5223aea9,
         type: 3}
       propertyPath: detectionOffset.y

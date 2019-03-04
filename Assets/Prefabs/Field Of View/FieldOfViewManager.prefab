@@ -274,7 +274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectorMaterial: {fileID: 2100000, guid: 85ca0a92c7916f54884ae29289bb25b7, type: 2}
-  blendSpeed: 5
+  blendSpeed: 10
   textureScale: 2
   fogTexture: {fileID: 8400000, guid: 1256e68fa640f6b42b8adddf19bb5320, type: 2}
 --- !u!1 &3645863969955495487
@@ -341,7 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectorMaterial: {fileID: 2100000, guid: 56a9bfded192c014789183d3039c02cb, type: 2}
-  blendSpeed: 5
+  blendSpeed: 10
   textureScale: 2
   fogTexture: {fileID: 8400000, guid: b444777f283c325429d42e0ca8b19fb4, type: 2}
 --- !u!1 &3645863970026404783

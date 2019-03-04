@@ -30,11 +30,14 @@ public class FieldOfView : MonoBehaviour
     [SerializeField]
     private MeshFilter viewMeshFilter;
 
+    [SerializeField]
+    private float maskCutawayDistance = 0.1f;
+
     private Mesh viewMesh;
 
     private float fogDistance = 12;
     private float fogHeight = 2;
-    
+
     private void Start()
     {
         viewMesh = new Mesh();
@@ -152,7 +155,8 @@ public class FieldOfView : MonoBehaviour
 
         if (Physics.Raycast((transform.position + detectionOffset), dir, out var hit, viewRadius, obstacleMask))
         {
-            return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
+            // Applying maskCutawayDistance to make sure the walls remain visible.
+            return new ViewCastInfo(true, hit.point + (-hit.normal * maskCutawayDistance), hit.distance, globalAngle);
         }
         else
         {
