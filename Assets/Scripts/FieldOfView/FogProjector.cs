@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(Projector))]
 public class FogProjector : MonoBehaviour
 {
     [SerializeField]
@@ -19,25 +20,26 @@ public class FogProjector : MonoBehaviour
     private RenderTexture currTexture;
     private Projector projector;
 
-    private float blendAmount;
-
     private IEnumerator blendFogCoroutine;
 
     private void Awake()
     {
         projector = GetComponent<Projector>();
         projector.enabled = true;
+    }
 
+    private void OnEnable()
+    {
         prevTexture = GenerateTexture();
         currTexture = GenerateTexture();
-
+        
         // Projector materials aren't instanced, resulting in the material asset getting changed.
         // Instance it here to prevent us from having to check in or discard these changes manually.
         projector.material = new Material(projectorMaterial);
 
         projector.material.SetTexture("_PrevTexture", prevTexture);
         projector.material.SetTexture("_CurrTexture", currTexture);
-
+        
         StartNewBlend();
     }
 
@@ -60,12 +62,11 @@ public class FogProjector : MonoBehaviour
 
     private IEnumerator BlendFog()
     {
-        blendAmount = 0;
         // Swap the textures
         Graphics.Blit(currTexture, prevTexture);
         Graphics.Blit(fogTexture, currTexture);
 
-        for (var blendAmound = 0f; blendAmount < 1; blendAmount += Time.deltaTime * blendSpeed)
+        for (var blendAmount = 0f; blendAmount < 1; blendAmount += Time.deltaTime * blendSpeed)
         {
             // Set the blend property so the shader knows how much to lerp
             // by when checking the alpha value
