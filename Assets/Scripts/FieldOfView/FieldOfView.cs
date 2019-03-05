@@ -56,7 +56,7 @@ public class FieldOfView : MonoBehaviour
         viewMeshFilter.mesh = viewMesh;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         DrawFieldOfView();
     }
