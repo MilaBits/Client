@@ -90,12 +90,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a78f1bcb0b2ed6641aa29766ee037de6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewMeshFilter: {fileID: 4346664726023322832}
+  netEntity: {fileID: 0}
   viewRange: 5
   viewConeWidth: 360
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 2048
   meshResolution: 0.1
   maskCutawayDistance: 0.25
   edgeResolveIterations: 6

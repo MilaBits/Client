@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
-using Unity.Collections;
-using Unity.Jobs;
-using UnityEditor.IMGUI.Controls;
+using Brisk.Entities;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(MeshFilter))]
 public class FieldOfView : MonoBehaviour
 {
+    [SerializeField]
+    private NetEntity netEntity;
+
     [SerializeField]
     private float viewRange = 5;
 
@@ -49,11 +50,22 @@ public class FieldOfView : MonoBehaviour
 
     private void Start()
     {
+        if (!netEntity) Debug.LogError("Net Entity not set");
+
+        // Destroy Field of View if it's not on the player's character
+        if (!netEntity.Owner) gameObject.SetActive(false);
+
         viewMeshFilter = GetComponent<MeshFilter>();
 
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
+    }
+
+    private void Update()
+    {
+        // Keep FOV mesh from rotating, reducing 'flickering'
+        transform.rotation = Quaternion.identity;
     }
 
     private void FixedUpdate()
