@@ -8,9 +8,6 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter))]
 public class FieldOfView : MonoBehaviour
 {
-    [SerializeField] [Tooltip("The mesh that will show this field of view")]
-    private MeshFilter viewMeshFilter;
-    
     [SerializeField]
     private float viewRange = 5;
 
@@ -47,15 +44,13 @@ public class FieldOfView : MonoBehaviour
     [Tooltip("The center of the field of view's actual wall detection")]
     private Vector3 detectionOffset;
 
+    private MeshFilter viewMeshFilter;
     private Mesh viewMesh;
-
-    private float fogDistance = 12;
-    private float fogHeight = 2;
 
     private void Start()
     {
-        if (!viewMeshFilter) Debug.LogError($"View Mesh Filter is not set on: {gameObject.name}");
-        
+        viewMeshFilter = GetComponent<MeshFilter>();
+
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
@@ -176,11 +171,9 @@ public class FieldOfView : MonoBehaviour
             return new ViewCastInfo(true, hit.point + (-hit.normal * maskCutawayDistance), hit.distance, globalAngle,
                 hit.normal);
         }
-        else
-        {
-            return new ViewCastInfo(false, (transform.position + detectionOffset) + dir * viewRange, viewRange,
-                globalAngle, hit.normal);
-        }
+
+        return new ViewCastInfo(false, (transform.position + detectionOffset) + dir * viewRange, viewRange,
+            globalAngle, hit.normal);
     }
 
     public struct EdgeInfo
