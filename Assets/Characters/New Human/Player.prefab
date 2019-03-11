@@ -2337,6 +2337,16 @@ PrefabInstance:
       propertyPath: netEntity
       value: 
       objectReference: {fileID: 114086752299939632}
+    - target: {fileID: 4346664726023322833, guid: c9b1cfbba31dba34e90d8eec5223aea9,
+        type: 3}
+      propertyPath: maskCutawayDistance
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346664726023322833, guid: c9b1cfbba31dba34e90d8eec5223aea9,
+        type: 3}
+      propertyPath: meshResolution
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9b1cfbba31dba34e90d8eec5223aea9, type: 3}
 --- !u!4 &8121291713696454470 stripped
