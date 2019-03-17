@@ -104,11 +104,9 @@ MonoBehaviour:
     South: {fileID: 0}
     SouthWest: {fileID: 0}
     West: {fileID: 0}
+  connectableGroup: {fileID: 0}
   meshFilter: {fileID: 351727468818524019}
   meshRenderer: {fileID: 2592206776025286276}
-  connectableMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!33 &351727468818524019
 MeshFilter:
   m_ObjectHideFlags: 0

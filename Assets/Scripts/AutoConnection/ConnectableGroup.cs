@@ -25,7 +25,6 @@ public class ConnectableGroup : MonoBehaviour
     public void UpdateGridContent()
     {
         UpdateGridSize();
-        string debugMessage = "\n";
 
         for (int x = 0; x < Grid.GetLength(0); x++)
         {
@@ -40,14 +39,8 @@ public class ConnectableGroup : MonoBehaviour
                 {
                     Grid[x, z] = hit.collider.attachedRigidbody.GetComponent<Connectable>();
                 }
-
-                debugMessage += Grid[x, z] ? $"{Grid[x, z].name[0]}," : " ,";
             }
-
-            debugMessage += "\n";
         }
-
-        Debug.Log(debugMessage);
     }
 
     public Connectable GetConnectableAtPosition(int x, int y)

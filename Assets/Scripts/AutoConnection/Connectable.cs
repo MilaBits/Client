@@ -7,7 +7,6 @@ using UnityEngine.Events;
 
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(MeshFilter))]
-[ExecuteInEditMode]
 public class Connectable : MonoBehaviour
 {
     [Tooltip("Add new Connectable Settings through Create>SS3D>Connectable Data")]
@@ -16,11 +15,16 @@ public class Connectable : MonoBehaviour
     [SerializeField]
     private AdjacentData adjacentData;
 
-    private MeshFilter meshFilter;
-    private MeshRenderer meshRenderer;
-
     [SerializeField]
     private ConnectableGroup connectableGroup;
+
+    [Space]
+    [SerializeField]
+    private MeshFilter meshFilter;
+
+    [SerializeField]
+    private MeshRenderer meshRenderer;
+
 
     private Vector2Int position
     {
@@ -28,7 +32,6 @@ public class Connectable : MonoBehaviour
     }
 
     // Using Awake in edit mode so meshFilter and meshRenderer are set during edit mode too.
-#if UNITY_EDITOR
     private void Awake()
     {
         if (!EditorApplication.isPlaying)
@@ -37,7 +40,6 @@ public class Connectable : MonoBehaviour
             meshRenderer = GetComponent<MeshRenderer>();
         }
     }
-#endif
 
     private void Start()
     {
