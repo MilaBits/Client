@@ -4,15 +4,17 @@ using UnityEngine;
 [CustomPropertyDrawer(typeof(AdjacentData))]
 public class AdjacentDataDrawer : PropertyDrawer
 {
-    private SerializedProperty NorthProp;
-    private SerializedProperty EastProp;
-    private SerializedProperty SouthProp;
-    private SerializedProperty WestProp;
+    private SerializedProperty directionsProp;
 
-    private SerializedProperty NorthEastProp;
-    private SerializedProperty SouthEastProp;
-    private SerializedProperty SouthWestProp;
-    private SerializedProperty NorthWestProp;
+    private SerializedProperty northProp;
+    private SerializedProperty eastProp;
+    private SerializedProperty southProp;
+    private SerializedProperty westProp;
+
+    private SerializedProperty northEastProp;
+    private SerializedProperty southEastProp;
+    private SerializedProperty southWestProp;
+    private SerializedProperty northWestProp;
 
     private string name;
     private bool cache = false;
@@ -26,36 +28,37 @@ public class AdjacentDataDrawer : PropertyDrawer
             name = property.displayName;
 
             property.Next(true);
+            directionsProp = property.Copy();
             property.Next(true);
-            NorthProp = property.Copy();
-            property.Next(true);
-            property.Next(true);
-            property.Next(true);
-            EastProp = property.Copy();
+            northProp = property.Copy();
             property.Next(true);
             property.Next(true);
             property.Next(true);
-            SouthProp = property.Copy();
+            eastProp = property.Copy();
             property.Next(true);
             property.Next(true);
             property.Next(true);
-            WestProp = property.Copy();
+            southProp = property.Copy();
             property.Next(true);
             property.Next(true);
             property.Next(true);
-            NorthEastProp = property.Copy();
+            westProp = property.Copy();
             property.Next(true);
             property.Next(true);
             property.Next(true);
-            SouthEastProp = property.Copy();
+            northEastProp = property.Copy();
             property.Next(true);
             property.Next(true);
             property.Next(true);
-            SouthWestProp = property.Copy();
+            southEastProp = property.Copy();
             property.Next(true);
             property.Next(true);
             property.Next(true);
-            NorthWestProp = property.Copy();
+            southWestProp = property.Copy();
+            property.Next(true);
+            property.Next(true);
+            property.Next(true);
+            northWestProp = property.Copy();
 
             cache = true;
         }
@@ -70,71 +73,78 @@ public class AdjacentDataDrawer : PropertyDrawer
 
         EditorGUIUtility.labelWidth = 75f;
         EditorGUI.indentLevel = 0;
-
+        
         if (foldout)
         {
-            EditorGUI.BeginProperty(contentPosition, label, NorthProp);
+            EditorGUI.BeginProperty(contentPosition, label, northProp);
             {
                 EditorGUI.BeginChangeCheck();
-                EditorGUI.ObjectField(contentPosition, NorthProp, typeof(Connectable));
+                EditorGUI.ObjectField(contentPosition, northProp, typeof(Connectable));
             }
             EditorGUI.EndProperty();
             contentPosition.y += 18f;
-            EditorGUI.BeginProperty(contentPosition, label, EastProp);
+            EditorGUI.BeginProperty(contentPosition, label, eastProp);
             {
                 EditorGUI.BeginChangeCheck();
-                EditorGUI.ObjectField(contentPosition, EastProp, typeof(Connectable));
+                EditorGUI.ObjectField(contentPosition, eastProp, typeof(Connectable));
             }
             EditorGUI.EndProperty();
             contentPosition.y += 18f;
-            EditorGUI.BeginProperty(contentPosition, label, SouthProp);
+            EditorGUI.BeginProperty(contentPosition, label, southProp);
             {
                 EditorGUI.BeginChangeCheck();
-                EditorGUI.ObjectField(contentPosition, SouthProp, typeof(Connectable));
+                EditorGUI.ObjectField(contentPosition, southProp, typeof(Connectable));
             }
             EditorGUI.EndProperty();
             contentPosition.y += 18f;
-            EditorGUI.BeginProperty(contentPosition, label, WestProp);
+            EditorGUI.BeginProperty(contentPosition, label, westProp);
             {
                 EditorGUI.BeginChangeCheck();
-                EditorGUI.ObjectField(contentPosition, WestProp, typeof(Connectable));
-            }
-            EditorGUI.EndProperty();
-
-            contentPosition.y += 36f;
-            EditorGUI.BeginProperty(contentPosition, label, NorthEastProp);
-            {
-                EditorGUI.BeginChangeCheck();
-                EditorGUI.ObjectField(contentPosition, NorthEastProp, typeof(Connectable));
+                EditorGUI.ObjectField(contentPosition, westProp, typeof(Connectable));
             }
             EditorGUI.EndProperty();
             contentPosition.y += 18f;
-            EditorGUI.BeginProperty(contentPosition, label, SouthEastProp);
+            EditorGUI.BeginProperty(contentPosition, label, northEastProp);
             {
                 EditorGUI.BeginChangeCheck();
-                EditorGUI.ObjectField(contentPosition, SouthEastProp, typeof(Connectable));
+                EditorGUI.ObjectField(contentPosition, northEastProp, typeof(Connectable));
             }
             EditorGUI.EndProperty();
             contentPosition.y += 18f;
-            EditorGUI.BeginProperty(contentPosition, label, SouthWestProp);
+            EditorGUI.BeginProperty(contentPosition, label, southEastProp);
             {
                 EditorGUI.BeginChangeCheck();
-                EditorGUI.ObjectField(contentPosition, SouthWestProp, typeof(Connectable));
+                EditorGUI.ObjectField(contentPosition, southEastProp, typeof(Connectable));
             }
             EditorGUI.EndProperty();
             contentPosition.y += 18f;
-            EditorGUI.BeginProperty(contentPosition, label, NorthWestProp);
+            EditorGUI.BeginProperty(contentPosition, label, southWestProp);
             {
                 EditorGUI.BeginChangeCheck();
-                EditorGUI.ObjectField(contentPosition, NorthWestProp, typeof(Connectable));
+                EditorGUI.ObjectField(contentPosition, southWestProp, typeof(Connectable));
+            }
+            EditorGUI.EndProperty();
+            contentPosition.y += 18f;
+            EditorGUI.BeginProperty(contentPosition, label, northWestProp);
+            {
+                EditorGUI.BeginChangeCheck();
+                EditorGUI.ObjectField(contentPosition, northWestProp, typeof(Connectable));
             }
             EditorGUI.EndProperty();
         }
+        
+        EditorGUI.BeginProperty(contentPosition, label, directionsProp);
+        {
+            EditorGUI.BeginChangeCheck();
+            EditorGUI.PropertyField(contentPosition, directionsProp, new GUIContent(""));
+        }
+        EditorGUI.EndProperty();
+        contentPosition.y += 32f;
     }
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
         if (!foldout) return 16f;
-        return 16f + 18f * 9;
+        return 16f + 18f * 8;
     }
 }

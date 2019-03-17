@@ -2,14 +2,14 @@
 
 [Flags]
 public enum Directions
- {
-     None = 0,
-     North = 1,
-     East = 2,
-     South = 4,
-     West = 8,
-     NorthEast = 16,
-     SouthEast = 32,
-     SouthWest = 64,
-     NorthWest = 128
- }
+{
+    None = 0,
+    NorthWest = 1,
+    North = 2,
+    NorthEast = 4,
+    East = 8,
+    SouthEast = 16,
+    South = 32,
+    SouthWest = 64,
+    West = 128,
+}

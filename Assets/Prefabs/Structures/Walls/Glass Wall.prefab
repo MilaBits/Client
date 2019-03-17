@@ -94,18 +94,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectableSettings: {fileID: 11400000, guid: 11002d85f4f29334c93cbf48df80f191,
     type: 2}
-  adjacents:
-    Connections: 0
-    North: {fileID: 0}
-    East: {fileID: 0}
-    South: {fileID: 0}
-    West: {fileID: 0}
-    NorthEast: {fileID: 0}
-    SouthEast: {fileID: 0}
-    SouthWest: {fileID: 0}
+  adjacentData:
+    directions: 0
     NorthWest: {fileID: 0}
+    North: {fileID: 0}
+    NorthEast: {fileID: 0}
+    East: {fileID: 0}
+    SouthEast: {fileID: 0}
+    South: {fileID: 0}
+    SouthWest: {fileID: 0}
+    West: {fileID: 0}
   meshFilter: {fileID: 351727468818524019}
   meshRenderer: {fileID: 2592206776025286276}
+  connectableMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!33 &351727468818524019
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -175,8 +178,8 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0

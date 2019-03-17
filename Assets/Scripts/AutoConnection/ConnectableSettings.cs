@@ -21,8 +21,7 @@ public class ConnectableSettings : ScriptableObject
 
     public Mesh CrossMesh;
     public Vector3 CrossRotationOffset;
-
-
+ 
     public Material QuadColorMaterial;
     public Material TriColorMaterial;
     public Material DoubleColorMaterial;
@@ -30,6 +29,7 @@ public class ConnectableSettings : ScriptableObject
     public Material NoColorMaterial;
 
     public List<ConnectableSettings> ConnectsWith;
+
 
     public enum ConnectableType
     {

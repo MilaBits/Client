@@ -8,14 +8,17 @@ public class ConnectableEditor : Editor
     public override void OnInspectorGUI()
     {
         Connectable connectable = (Connectable) target;
-        base.OnInspectorGUI();
-        
-        if(GUILayout.Button("Connect to surroundings"))
+
+        if (GUILayout.Button("Construct (connect)"))
         {
-            foreach (GameObject gameObject in Selection.gameObjects)
+            Selection.gameObjects[0].GetComponent<Connectable>().Construct(true);
+            for (int i = 1; i < Selection.gameObjects.Length; i++)
             {
-                gameObject.GetComponent<Connectable>().Connect();
+                GameObject gameObject = Selection.gameObjects[i];
+                gameObject.GetComponent<Connectable>().Construct(false);
             }
         }
+
+        base.OnInspectorGUI();
     }
 }
