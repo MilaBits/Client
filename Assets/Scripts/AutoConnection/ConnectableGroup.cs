@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 public class ConnectableGroup : MonoBehaviour
@@ -12,16 +11,6 @@ public class ConnectableGroup : MonoBehaviour
 
     public Vector2Int Size => new Vector2Int(Grid.GetLength(0), Grid.GetLength(1));
 
-    private void Start()
-    {
-        UpdateGridContent();
-        foreach (Connectable connectable in Grid)
-        {
-            if (connectable)
-                connectable.Connect();
-        }
-    }
-
     public void UpdateGridContent()
     {
         UpdateGridSize();
@@ -31,7 +20,7 @@ public class ConnectableGroup : MonoBehaviour
             for (int z = 0; z < Grid.GetLength(1); z++)
             {
                 Physics.Raycast(new Vector3(x, -.5f, z), Vector3.up, out var hit, 1f);
-                if (hit.collider != null && hit.collider.GetComponent<Connectable>())
+                if (hit.collider != null)
                 {
                     Grid[x, z] = hit.collider.GetComponent<Connectable>();
                 }
@@ -70,13 +59,7 @@ public class ConnectableGroup : MonoBehaviour
         if (position.x < 0 || position.x >= Grid.GetLength(0) ||
             position.y < 0 || position.y >= Grid.GetLength(1)) return null;
 
-        if (Grid[position.x, position.y])
-        {
-            return Grid[position.x, position.y];
-        }
-
-        // There is no tile at position
-        return null;
+        return Grid[position.x, position.y];
     }
 
     public Connectable[] GetSurroundingConnectables(Vector2Int position)

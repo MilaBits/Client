@@ -14,8 +14,7 @@ public class ConnectableEditor : Editor
             Selection.gameObjects[0].GetComponent<Connectable>().Construct(true);
             for (int i = 1; i < Selection.gameObjects.Length; i++)
             {
-                GameObject gameObject = Selection.gameObjects[i];
-                gameObject.GetComponent<Connectable>().Construct(false);
+                Selection.gameObjects[i].GetComponent<Connectable>().Construct(false);
             }
         }
 

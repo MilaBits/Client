@@ -29,12 +29,4 @@ public class ConnectableSettings : ScriptableObject
     public Material NoColorMaterial;
 
     public List<ConnectableSettings> ConnectsWith;
-
-
-    public enum ConnectableType
-    {
-        OnlyConnect,
-        MeshBased,
-        MaterialBased
-    }
 }
