@@ -37,7 +37,6 @@ public class Connectable : MonoBehaviour
     private void Start()
     {
         if (!connectableGroup) connectableGroup = GetComponentInParent<ConnectableGroup>();
-        GetAdjacentsOnGrid();
     }
 
     public void Construct(bool updateGrid)
