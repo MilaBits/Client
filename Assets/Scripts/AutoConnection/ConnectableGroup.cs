@@ -19,14 +19,21 @@ public class ConnectableGroup : MonoBehaviour
         {
             for (int z = 0; z < Grid.GetLength(1); z++)
             {
+                if (x == 13 && z == 10)
+                {
+                }
+
                 Physics.Raycast(new Vector3(x, -.5f, z), Vector3.up, out var hit, 1f);
+                if (hit.collider != null && hit.collider.attachedRigidbody)
+                {
+                    Grid[x, z] = hit.collider.attachedRigidbody.GetComponent<Connectable>();
+
+                    continue;
+                }
+
                 if (hit.collider != null)
                 {
                     Grid[x, z] = hit.collider.GetComponent<Connectable>();
-                }
-                else if (hit.collider != null && hit.collider.attachedRigidbody)
-                {
-                    Grid[x, z] = hit.collider.attachedRigidbody.GetComponent<Connectable>();
                 }
             }
         }

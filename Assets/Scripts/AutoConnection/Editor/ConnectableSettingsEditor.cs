@@ -61,11 +61,11 @@ public class ConnectableSettingsEditor : Editor
     {
         serializedObject.Update();
         connectableSettings.connectableType =
-            (ConnectableSettings.ConnectableType) EditorGUILayout.EnumPopup("Connectable Type",
+            (ConnectableType) EditorGUILayout.EnumPopup("Connectable Type",
                 connectableSettings.connectableType);
         switch (connectableSettings.connectableType)
         {
-            case ConnectableSettings.ConnectableType.MeshBased:
+            case ConnectableType.MeshBased:
                 EditorGUILayout.LabelField("End");
                 EditorGUI.indentLevel += 1;
                 connectableSettings.EndMesh = (Mesh) EditorGUILayout.ObjectField(new GUIContent("Mesh"),
@@ -101,7 +101,7 @@ public class ConnectableSettingsEditor : Editor
                 connectableSettings.CrossRotationOffset= EditorGUILayout.Vector3Field("Rot. Offset", connectableSettings.CrossRotationOffset);
                 EditorGUI.indentLevel -= 1;
                 break;
-            case ConnectableSettings.ConnectableType.MaterialBased:
+            case ConnectableType.MaterialBased:
                 connectableSettings.QuadColorMaterial = (Material) EditorGUILayout.ObjectField(new GUIContent("Quad"),
                     quadColorMaterialProp.objectReferenceValue, typeof(Material), false);
                 connectableSettings.TriColorMaterial = (Material) EditorGUILayout.ObjectField(new GUIContent("Tri"),

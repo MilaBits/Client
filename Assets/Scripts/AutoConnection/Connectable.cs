@@ -48,18 +48,10 @@ public class Connectable : MonoBehaviour
             if (updateGrid) connectableGroup.UpdateGridContent();
 
             Connect();
-//            for (int i = 0; i < adjacentData.adjacentConnectables.Length; i++)
-//            {
-//                if (adjacentData.adjacentConnectables[i]) adjacentData.adjacentConnectables[i].Connect();                
-//            }
-            if (adjacentData.adjacentConnectables[0]) adjacentData.adjacentConnectables[0].Connect();
-            if (adjacentData.adjacentConnectables[1]) adjacentData.adjacentConnectables[1].Connect();
-            if (adjacentData.adjacentConnectables[2]) adjacentData.adjacentConnectables[2].Connect();
-            if (adjacentData.adjacentConnectables[3]) adjacentData.adjacentConnectables[3].Connect();
-            if (adjacentData.adjacentConnectables[4]) adjacentData.adjacentConnectables[4].Connect();
-            if (adjacentData.adjacentConnectables[5]) adjacentData.adjacentConnectables[5].Connect();
-            if (adjacentData.adjacentConnectables[6]) adjacentData.adjacentConnectables[6].Connect();
-            if (adjacentData.adjacentConnectables[7]) adjacentData.adjacentConnectables[7].Connect();
+            for (int i = 0; i < adjacentData.adjacentConnectables.Length; i++)
+            {
+                if (adjacentData.adjacentConnectables[i]) adjacentData.adjacentConnectables[i].Connect();                
+            }
         }
     }
 
@@ -77,7 +69,7 @@ public class Connectable : MonoBehaviour
         switch (ConnectableSettings.connectableType)
         {
             // Only rotating (Doors for example)
-            case ConnectableSettings.ConnectableType.OnlyConnect:
+            case ConnectableType.OnlyConnect:
                 switch (adjacentData.directions & ~(Directions.NorthEast | Directions.SouthEast |
                                                     Directions.SouthWest | Directions.NorthWest))
                 {
@@ -92,7 +84,7 @@ public class Connectable : MonoBehaviour
                 break;
 
             // Material Connections
-            case ConnectableSettings.ConnectableType.MaterialBased:
+            case ConnectableType.MaterialBased:
                 switch (adjacentData.directions)
                 {
                     case Directions.None:
@@ -132,6 +124,7 @@ public class Connectable : MonoBehaviour
                         break;
 
                     // North East Outer
+                    case Directions.NorthEast | Directions.East | Directions.NorthWest:
                     case Directions.North | Directions.NorthEast | Directions.East:
                     case Directions.North | Directions.NorthEast | Directions.East | Directions.NorthWest:
                     case Directions.North | Directions.NorthEast | Directions.East | Directions.SouthEast:
@@ -143,6 +136,7 @@ public class Connectable : MonoBehaviour
                         break;
 
                     // South East Outer
+                    case Directions.East | Directions.SouthEast | Directions.SouthWest:
                     case Directions.South | Directions.SouthEast | Directions.East:
                     case Directions.South | Directions.SouthEast | Directions.East | Directions.NorthEast:
                     case Directions.South | Directions.SouthEast | Directions.East | Directions.SouthWest:
@@ -150,6 +144,7 @@ public class Connectable : MonoBehaviour
                          Directions.NorthEast:
                     case Directions.SouthEast | Directions.East | Directions.SouthWest | Directions.NorthEast:
                     case Directions.South | Directions.SouthEast | Directions.SouthWest | Directions.NorthEast:
+                        
                         UpdateMaterialAndRotation(ConnectableSettings.TriColorMaterial, 180);
                         break;
 
@@ -246,7 +241,6 @@ public class Connectable : MonoBehaviour
                          Directions.SouthWest | Directions.NorthWest:
                     case Directions.East | Directions.West:
                     case Directions.East | Directions.West | Directions.NorthEast:
-                    case Directions.East | Directions.SouthEast | Directions.SouthWest:
                     case Directions.North | Directions.NorthEast | Directions.SouthEast:
                     case Directions.East | Directions.SouthEast | Directions.West:
                     case Directions.East | Directions.West | Directions.SouthWest:
@@ -294,7 +288,7 @@ public class Connectable : MonoBehaviour
                     default:
 
                         // Woops! the surrounding tile combination you encountered hasn't been added to the switch yet, do so in the cases above.
-                        Debug.LogWarning(
+                        Debug.Log(
                             $"{gameObject.name}: No fitting connection setup yet. Please paste \"case Directions.{adjacentData.directions.ToString().Replace(", ", " | Directions.")}:\" where it should be in Connectable.cs");
                         break;
                 }
@@ -302,7 +296,7 @@ public class Connectable : MonoBehaviour
                 break;
 
             // Connecting meshes
-            case ConnectableSettings.ConnectableType.MeshBased:
+            case ConnectableType.MeshBased:
                 switch (adjacentData.directions & ~(Directions.NorthEast | Directions.SouthEast |
                                                     Directions.SouthWest | Directions.NorthWest))
                 {
