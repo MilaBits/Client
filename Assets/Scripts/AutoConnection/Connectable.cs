@@ -93,7 +93,7 @@ public class Connectable : MonoBehaviour
                 switch (adjacentData.directions)
                 {
                     case Directions.None:
-                        UpdateMaterialAndRotation(ConnectableSettings.NoColorMaterial, 0);
+                        UpdateMaterialAndRotation(ConnectableSettings.NoColorMaterial, ConnectableSettings.GlobalRotationOffset, 0);
                         break;
 
                     // North
@@ -101,7 +101,7 @@ public class Connectable : MonoBehaviour
                     case Directions.North | Directions.NorthEast:
                     case Directions.North | Directions.NorthWest:
                     case Directions.North | Directions.NorthEast | Directions.NorthWest:
-                        UpdateMaterialAndRotation(ConnectableSettings.DoubleColorMaterial, 270);
+                        UpdateMaterialAndRotation(ConnectableSettings.DoubleColorMaterial, ConnectableSettings.GlobalRotationOffset, 270);
                         break;
 
                     // East
@@ -109,7 +109,7 @@ public class Connectable : MonoBehaviour
                     case Directions.East | Directions.NorthEast:
                     case Directions.East | Directions.SouthEast:
                     case Directions.East | Directions.NorthEast | Directions.SouthEast:
-                        UpdateMaterialAndRotation(ConnectableSettings.DoubleColorMaterial, 0);
+                        UpdateMaterialAndRotation(ConnectableSettings.DoubleColorMaterial, ConnectableSettings.GlobalRotationOffset, 0);
                         break;
 
                     // South
@@ -117,7 +117,7 @@ public class Connectable : MonoBehaviour
                     case Directions.South | Directions.SouthEast:
                     case Directions.South | Directions.SouthWest:
                     case Directions.South | Directions.SouthEast | Directions.SouthWest:
-                        UpdateMaterialAndRotation(ConnectableSettings.DoubleColorMaterial, 90);
+                        UpdateMaterialAndRotation(ConnectableSettings.DoubleColorMaterial, ConnectableSettings.GlobalRotationOffset, 90);
                         break;
 
                     // West
@@ -125,7 +125,7 @@ public class Connectable : MonoBehaviour
                     case Directions.West | Directions.NorthWest:
                     case Directions.West | Directions.SouthWest:
                     case Directions.West | Directions.NorthWest | Directions.SouthWest:
-                        UpdateMaterialAndRotation(ConnectableSettings.DoubleColorMaterial, 180);
+                        UpdateMaterialAndRotation(ConnectableSettings.DoubleColorMaterial, ConnectableSettings.GlobalRotationOffset, 180);
                         break;
 
                     // North East Outer
@@ -137,7 +137,7 @@ public class Connectable : MonoBehaviour
                          Directions.NorthWest:
                     case Directions.NorthEast | Directions.East | Directions.SouthEast | Directions.NorthWest:
                     case Directions.North | Directions.NorthEast | Directions.SouthEast | Directions.NorthWest:
-                        UpdateMaterialAndRotation(ConnectableSettings.TriColorMaterial, 90);
+                        UpdateMaterialAndRotation(ConnectableSettings.TriColorMaterial, ConnectableSettings.GlobalRotationOffset, 90);
                         break;
 
                     // South East Outer
@@ -150,7 +150,7 @@ public class Connectable : MonoBehaviour
                     case Directions.SouthEast | Directions.East | Directions.SouthWest | Directions.NorthEast:
                     case Directions.South | Directions.SouthEast | Directions.SouthWest | Directions.NorthEast:
 
-                        UpdateMaterialAndRotation(ConnectableSettings.TriColorMaterial, 180);
+                        UpdateMaterialAndRotation(ConnectableSettings.TriColorMaterial, ConnectableSettings.GlobalRotationOffset, 180);
                         break;
 
                     // North West Outer
@@ -162,7 +162,7 @@ public class Connectable : MonoBehaviour
                          Directions.SouthWest:
                     case Directions.NorthWest | Directions.West | Directions.NorthEast | Directions.SouthWest:
                     case Directions.North | Directions.NorthWest | Directions.NorthEast | Directions.SouthWest:
-                        UpdateMaterialAndRotation(ConnectableSettings.TriColorMaterial, 0);
+                        UpdateMaterialAndRotation(ConnectableSettings.TriColorMaterial, ConnectableSettings.GlobalRotationOffset, 0);
                         break;
 
                     // South West Outer
@@ -174,46 +174,46 @@ public class Connectable : MonoBehaviour
                     case Directions.SouthWest | Directions.West | Directions.NorthWest | Directions.SouthEast:
                     case Directions.South | Directions.SouthWest | Directions.NorthWest | Directions.SouthEast:
                     case Directions.SouthEast | Directions.SouthWest | Directions.West:
-                        UpdateMaterialAndRotation(ConnectableSettings.TriColorMaterial, 270);
+                        UpdateMaterialAndRotation(ConnectableSettings.TriColorMaterial, ConnectableSettings.GlobalRotationOffset, 270);
                         break;
 
                     // North East Inner
                     case Directions.NorthEast:
-                        UpdateMaterialAndRotation(ConnectableSettings.SingleColorMaterial, 180);
+                        UpdateMaterialAndRotation(ConnectableSettings.SingleColorMaterial, ConnectableSettings.GlobalRotationOffset, 180);
                         break;
 
                     // South East Inner
                     case Directions.SouthEast:
-                        UpdateMaterialAndRotation(ConnectableSettings.SingleColorMaterial, 270);
+                        UpdateMaterialAndRotation(ConnectableSettings.SingleColorMaterial, ConnectableSettings.GlobalRotationOffset, 270);
                         break;
 
                     // South West Inner
                     case Directions.SouthWest:
-                        UpdateMaterialAndRotation(ConnectableSettings.SingleColorMaterial, 0);
+                        UpdateMaterialAndRotation(ConnectableSettings.SingleColorMaterial, ConnectableSettings.GlobalRotationOffset, 0);
                         break;
                     // North West Inner
                     case Directions.NorthWest:
-                        UpdateMaterialAndRotation(ConnectableSettings.SingleColorMaterial, 90);
+                        UpdateMaterialAndRotation(ConnectableSettings.SingleColorMaterial, ConnectableSettings.GlobalRotationOffset, 90);
                         break;
 
                     // Split NorthEast SouthEast
                     case Directions.NorthEast | Directions.SouthEast:
-                        UpdateMaterialAndRotation(ConnectableSettings.DoubleColorMaterial, 0);
+                        UpdateMaterialAndRotation(ConnectableSettings.DoubleColorMaterial, ConnectableSettings.GlobalRotationOffset, 0);
                         break;
 
                     // Split NorthEast SouthEast
                     case Directions.SouthEast | Directions.SouthWest:
-                        UpdateMaterialAndRotation(ConnectableSettings.DoubleColorMaterial, 90);
+                        UpdateMaterialAndRotation(ConnectableSettings.DoubleColorMaterial, ConnectableSettings.GlobalRotationOffset, 90);
                         break;
 
                     // Split NorthEast SouthEast
                     case Directions.SouthWest | Directions.NorthWest:
-                        UpdateMaterialAndRotation(ConnectableSettings.DoubleColorMaterial, 180);
+                        UpdateMaterialAndRotation(ConnectableSettings.DoubleColorMaterial, ConnectableSettings.GlobalRotationOffset, 180);
                         break;
 
                     // Split NorthEast SouthEast
                     case Directions.NorthWest | Directions.NorthEast:
-                        UpdateMaterialAndRotation(ConnectableSettings.DoubleColorMaterial, 270);
+                        UpdateMaterialAndRotation(ConnectableSettings.DoubleColorMaterial, ConnectableSettings.GlobalRotationOffset, 270);
                         break;
 
                     // Quad Cases
@@ -287,7 +287,7 @@ public class Connectable : MonoBehaviour
                     case Directions.NorthWest | Directions.North | Directions.NorthEast | Directions.South:
                     case Directions.North | Directions.NorthEast | Directions.East | Directions.SouthEast |
                          Directions.SouthWest:
-                        UpdateMaterialAndRotation(ConnectableSettings.QuadColorMaterial, 0);
+                        UpdateMaterialAndRotation(ConnectableSettings.QuadColorMaterial, ConnectableSettings.GlobalRotationOffset, 0);
                         break;
 
                     default:
@@ -400,10 +400,10 @@ public class Connectable : MonoBehaviour
         transform.eulerAngles = rotation;
     }
 
-    private void UpdateMaterialAndRotation(Material material, float rotation)
+    private void UpdateMaterialAndRotation(Material material, Vector3 rotationOffset, float rotation)
     {
         meshRenderer.sharedMaterial = material;
-        transform.eulerAngles = new Vector3(90, 0, -rotation);
+        transform.eulerAngles = rotationOffset + new Vector3(0, 0, -rotation);
     }
 
     private void UpdateAdjacent(Vector2Int offset, int adjacentConnectablesIndex)

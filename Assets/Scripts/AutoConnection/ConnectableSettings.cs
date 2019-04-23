@@ -7,6 +7,8 @@ public class ConnectableSettings : ScriptableObject
 {
     public ConnectableType connectableType;
 
+    public Vector3 GlobalRotationOffset;
+    
     public Mesh EndMesh;
     public Vector3 EndRotationOffset;
 

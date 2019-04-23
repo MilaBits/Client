@@ -11,6 +11,8 @@ public class ConnectableSettingsEditor : Editor
 
     private ConnectableSettings connectableSettings;
 
+    private SerializedProperty globalRotationOffsetProp;
+    
     private SerializedProperty endMeshProp;
     private SerializedProperty endRotationOffsetProp;
     private SerializedProperty straightMeshProp;
@@ -33,6 +35,8 @@ public class ConnectableSettingsEditor : Editor
         connectableSettings = (ConnectableSettings) target;
 
         connectsWithProp = serializedObject.FindProperty("ConnectsWith");
+
+        globalRotationOffsetProp = serializedObject.FindProperty("GlobalRotationOffset");
 
         endMeshProp = serializedObject.FindProperty("EndMesh");
         endRotationOffsetProp = serializedObject.FindProperty("EndRotationOffset");
@@ -63,6 +67,9 @@ public class ConnectableSettingsEditor : Editor
         connectableSettings.connectableType =
             (ConnectableType) EditorGUILayout.EnumPopup("Connectable Type",
                 connectableSettings.connectableType);
+        
+        connectableSettings.GlobalRotationOffset = EditorGUILayout.Vector3Field("Global Rot. Offset", connectableSettings.GlobalRotationOffset);
+
         switch (connectableSettings.connectableType)
         {
             case ConnectableType.MeshBased:
