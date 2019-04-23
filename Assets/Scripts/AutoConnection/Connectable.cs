@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshRenderer))]
@@ -21,17 +23,21 @@ public class Connectable : MonoBehaviour
     [SerializeField]
     private MeshRenderer meshRenderer;
 
+    private Dictionary<Vector2Int, Directions> adjacentDictionary = new Dictionary<Vector2Int, Directions>
+    {
+        [new Vector2Int(-1, 1)] = Directions.NorthWest,
+        [new Vector2Int(0, 1)] = Directions.North,
+        [new Vector2Int(1, 1)] = Directions.NorthEast,
+        [new Vector2Int(1, 0)] = Directions.East,
+        [new Vector2Int(1, -1)] = Directions.SouthEast,
+        [new Vector2Int(0, -1)] = Directions.South,
+        [new Vector2Int(-1, -1)] = Directions.SouthWest,
+        [new Vector2Int(-1, 0)] = Directions.West,
+    };
 
     private Vector2Int position
     {
         get => new Vector2Int(Convert.ToInt16(transform.position.x), Convert.ToInt16(transform.position.z));
-    }
-
-    // Using Awake in edit mode so meshFilter and meshRenderer are set during edit mode too.
-    private void Awake()
-    {
-        if (!meshFilter) meshFilter = GetComponentInChildren<MeshFilter>();
-        if (!meshRenderer) meshRenderer = GetComponentInChildren<MeshRenderer>();
     }
 
     private void Start()
@@ -44,12 +50,12 @@ public class Connectable : MonoBehaviour
         if (!connectableGroup) connectableGroup = GetComponentInParent<ConnectableGroup>();
         if (connectableGroup)
         {
-            if (updateGrid) connectableGroup.UpdateGridContent();
+            if (updateGrid) connectableGroup.UpdateGrid();
 
             Connect();
-            for (int i = 0; i < adjacentData.adjacentConnectables.Length; i++)
+            foreach (Connectable connectable in adjacentData.adjacentConnectables)
             {
-                if (adjacentData.adjacentConnectables[i]) adjacentData.adjacentConnectables[i].Connect();                
+                if (connectable) connectable.Connect();
             }
         }
     }
@@ -61,7 +67,7 @@ public class Connectable : MonoBehaviour
     }
 
     // method of connecting, works, but UGLY and long.
-    public void Connect()
+    private void Connect()
     {
         GetAdjacentsOnGrid();
 
@@ -143,7 +149,7 @@ public class Connectable : MonoBehaviour
                          Directions.NorthEast:
                     case Directions.SouthEast | Directions.East | Directions.SouthWest | Directions.NorthEast:
                     case Directions.South | Directions.SouthEast | Directions.SouthWest | Directions.NorthEast:
-                        
+
                         UpdateMaterialAndRotation(ConnectableSettings.TriColorMaterial, 180);
                         break;
 
@@ -400,10 +406,22 @@ public class Connectable : MonoBehaviour
         transform.eulerAngles = new Vector3(90, 0, -rotation);
     }
 
-    public void GetAdjacentsOnGrid()
+    private void UpdateAdjacent(Vector2Int offset, int adjacentConnectablesIndex)
+    {
+        Connectable adjacent = connectableGroup.GetConnectableAtPosition(position + offset, ConnectableSettings);
+        adjacentData.adjacentConnectables[adjacentConnectablesIndex] =
+            connectableGroup.GetConnectableAtPosition(position + offset);
+        if (adjacent)
+        {
+            adjacentData.directions |= adjacentDictionary[offset];
+            adjacentData.adjacentConnectables[adjacentConnectablesIndex] = adjacent;
+        }
+    }
+
+    private void GetAdjacentsOnGrid()
     {
         if (!connectableGroup) connectableGroup = GetComponentInParent<ConnectableGroup>();
-        if (connectableGroup.Grid.Length < 1) connectableGroup.UpdateGridContent();
+        if (connectableGroup.Grid.Length < 1) connectableGroup.UpdateGrid();
 
         if (!connectableGroup)
         {
@@ -414,83 +432,10 @@ public class Connectable : MonoBehaviour
         Connectable adjacent;
 
         adjacentData.adjacentConnectables = new Connectable[8];
-        
-        adjacent = connectableGroup.GetConnectableAtPosition(position + new Vector2Int(-1, 1), ConnectableSettings);
-        adjacentData.adjacentConnectables[0] = connectableGroup.GetConnectableAtPosition(position + new Vector2Int(-1, 1));
-        if (adjacent)
+
+        for (int i = 0; i < adjacentDictionary.Count; i++)
         {
-            adjacentData.directions |= Directions.NorthWest;
-            adjacentData.adjacentConnectables[0] = adjacent;
-        }
-
-
-        adjacent = connectableGroup.GetConnectableAtPosition(position + new Vector2Int(0, 1), ConnectableSettings);
-        adjacentData.adjacentConnectables[1] = connectableGroup.GetConnectableAtPosition(position + new Vector2Int(0, 1));
-
-        if (adjacent)
-        {
-            adjacentData.directions |= Directions.North;
-            adjacentData.adjacentConnectables[1] = adjacent;
-        }
-
-
-        adjacent = connectableGroup.GetConnectableAtPosition(position + new Vector2Int(1, 1), ConnectableSettings);
-        adjacentData.adjacentConnectables[2] = connectableGroup.GetConnectableAtPosition(position + new Vector2Int(1, 1));
-
-        if (adjacent)
-        {
-            adjacentData.directions |= Directions.NorthEast;
-            adjacentData.adjacentConnectables[2] = adjacent;
-        }
-
-
-        adjacent = connectableGroup.GetConnectableAtPosition(position + new Vector2Int(1, 0), ConnectableSettings);
-        adjacentData.adjacentConnectables[3] = connectableGroup.GetConnectableAtPosition(position + new Vector2Int(1, 0));
-
-        if (adjacent)
-        {
-            adjacentData.directions |= Directions.East;
-            adjacentData.adjacentConnectables[3] = adjacent;
-        }
-
-
-        adjacent = connectableGroup.GetConnectableAtPosition(position + new Vector2Int(1, -1), ConnectableSettings);
-        adjacentData.adjacentConnectables[4] = connectableGroup.GetConnectableAtPosition(position + new Vector2Int(1, -1));
-
-        if (adjacent)
-        {
-            adjacentData.directions |= Directions.SouthEast;
-            adjacentData.adjacentConnectables[4] = adjacent;
-        }
-
-
-        adjacent = connectableGroup.GetConnectableAtPosition(position + new Vector2Int(0, -1), ConnectableSettings);
-        adjacentData.adjacentConnectables[5] = connectableGroup.GetConnectableAtPosition(position + new Vector2Int(0, -1));
-
-        if (adjacent)
-        {
-            adjacentData.directions |= Directions.South;
-            adjacentData.adjacentConnectables[5] = adjacent;
-        }
-
-
-        adjacent = connectableGroup.GetConnectableAtPosition(position + new Vector2Int(-1, -1), ConnectableSettings);
-        adjacentData.adjacentConnectables[6] = connectableGroup.GetConnectableAtPosition(position + new Vector2Int(-1, -1));
-
-        if (adjacent)
-        {
-            adjacentData.directions |= Directions.SouthWest;
-            adjacentData.adjacentConnectables[6] = adjacent;
-        }
-
-
-        adjacent = connectableGroup.GetConnectableAtPosition(position + new Vector2Int(-1, 0), ConnectableSettings);
-        adjacentData.adjacentConnectables[7] = connectableGroup.GetConnectableAtPosition(position + new Vector2Int(-1, 0));
-
-        if (adjacent)
-        {
-            adjacentData.directions |= Directions.West;
-            adjacentData.adjacentConnectables[7] = adjacent;
+            UpdateAdjacent(adjacentDictionary.ElementAt(i).Key, i);
         }
     }
 }

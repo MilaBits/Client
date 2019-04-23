@@ -10,7 +10,7 @@ public class ConnectableGroupEditor : Editor
         
         if (GUILayout.Button("Update Grid"))
         {
-            connectableGroup.UpdateGridContent();
+            connectableGroup.UpdateGrid();
         }
         base.OnInspectorGUI();
     }

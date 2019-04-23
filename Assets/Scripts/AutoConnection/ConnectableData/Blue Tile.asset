@@ -29,5 +29,5 @@ MonoBehaviour:
   SingleColorMaterial: {fileID: 2100000, guid: c87eca2021d705741804d9a04b4924d1, type: 2}
   NoColorMaterial: {fileID: 2100000, guid: f65fc687cd8773f478d655f733a4414e, type: 2}
   ConnectsWith:
-  - {fileID: 11400000, guid: 731ce042464f3da4ca61885f28782b6d, type: 2}
+  - {fileID: 11400000, guid: 69c33043a9210c74990513eb3e475288, type: 2}
   - {fileID: 11400000, guid: 11002d85f4f29334c93cbf48df80f191, type: 2}
